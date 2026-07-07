@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한규현 건축 개인홈페이지</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & Noto Sans KR -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans KR', 'sans-serif'],
+                    },
+                    colors: {
+                        blueprint: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            200: '#bae0fd',
+                            600: '#2563eb',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                            950: '#0f172a',
+                        },
+                        structure: {
+                            tension: '#3b82f6', // 인장 (Blue)
+                            compression: '#ef4444', // 압축 (Red)
+                            accent: '#f59e0b' // 오렌지/옐로우 포인트
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 도면 그리드 배경 스타일 */
+        .blueprint-grid {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(37, 99, 235, 0.08) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(37, 99, 235, 0.08) 1px, transparent 1px);
+        }
+        .blueprint-grid-fine {
+            background-size: 8px 8px;
+            background-image: 
+                linear-gradient(to right, rgba(37, 99, 235, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(37, 99, 235, 0.04) 1px, transparent 1px);
+        }
+        /* 스크롤바 커스텀 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e3a8a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2563eb;
+        }
+    </style>
+</head>
+<body class="bg-blueprint-950 text-slate-100 font-sans antialiased overflow-x-hidden">
+
+    <!-- 네비게이션 바 -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-blueprint-950/80 backdrop-blur-md border-b border-blueprint-900/50">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#hero" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 bg-blueprint-600 rounded-lg flex items-center justify-center font-bold text-white text-xl tracking-wider transition-all duration-300 group-hover:bg-structure-accent">
+                    H
+                </div>
+                <div>
+                    <span class="text-lg font-bold tracking-tight block text-white">한규현</span>
+                    <span class="text-xs text-slate-400 font-light block -mt-1">Architectural Engineer</span>
+                </div>
+            </a>
+            
+            <!-- 데스크탑 메뉴 -->
+            <nav class="hidden md:flex items-center space-x-4 lg:space-x-6 text-sm font-medium text-slate-300">
+                <a href="#about" class="hover:text-structure-accent transition-colors">소개</a>
+                <a href="#simulator" class="hover:text-structure-accent transition-colors">구조 해석 시뮬레이터</a>
+                <a href="#skills" class="hover:text-structure-accent transition-colors">보유 역량</a>
+                <a href="#portfolio" class="hover:text-structure-accent transition-colors">프로젝트</a>
+                <a href="#timeline" class="hover:text-structure-accent transition-colors">경력 및 활동</a>
+                <a href="https://padlet.com/hkh021129/padlet-ffoa6fcq8pg88qgz" target="_blank" rel="noopener noreferrer" class="text-structure-accent hover:text-amber-400 transition-colors font-bold flex items-center">
+                    <i class="fa-solid fa-book-open mr-1.5 animate-pulse"></i>방명록
+                </a>
+                <a href="#contact" class="px-4 py-2 bg-blueprint-600 hover:bg-blueprint-800 text-white rounded-lg transition-all shadow-md shadow-blueprint-600/20">연락하기</a>
+            </nav>
+
+            <!-- 모바일 메뉴 버튼 -->
+            <button id="mobile-menu-btn" class="md:hidden text-slate-300 hover:text-white focus:outline-none">
+                <i class="fa-solid fa-bars text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- 모바일 드롭다운 메뉴 -->
+        <div id="mobile-menu" class="hidden md:hidden bg-blueprint-950/95 border-b border-blueprint-900 px-6 py-4 space-y-4 text-center">
+            <a href="#about" class="block text-slate-300 hover:text-structure-accent py-2">소개</a>
+            <a href="#simulator" class="block text-slate-300 hover:text-structure-accent py-2">구조 해석 시뮬레이터</a>
+            <a href="#skills" class="block text-slate-300 hover:text-structure-accent py-2">보유 역량</a>
+            <a href="#portfolio" class="block text-slate-300 hover:text-structure-accent py-2">프로젝트</a>
+            <a href="#timeline" class="block text-slate-300 hover:text-structure-accent py-2">경력 및 활동</a>
+            <a href="https://padlet.com/hkh021129/padlet-ffoa6fcq8pg88qgz" target="_blank" rel="noopener noreferrer" class="block text-structure-accent hover:text-amber-400 py-2 font-bold">
+                <i class="fa-solid fa-book-open mr-1.5"></i>방명록 (Padlet)
+            </a>
+            <a href="#contact" class="block w-full py-2.5 bg-blueprint-600 hover:bg-blueprint-800 text-white rounded-lg">연락하기</a>
+        </div>
+    </header>
+
+    <!-- 히어로 섹션 -->
+    <section id="hero" class="relative min-h-screen pt-20 flex items-center justify-center overflow-hidden blueprint-grid">
+        <div class="absolute inset-0 blueprint-grid-fine pointer-events-none"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-blueprint-950 via-transparent to-transparent"></div>
+        
+        <!-- 장식용 데코레이션 요소 (가상의 구조선) -->
+        <div class="absolute top-1/4 left-1/12 w-64 h-64 border border-blueprint-800/30 rounded-full animate-pulse-slow pointer-events-none"></div>
+        <div class="absolute bottom-1/4 right-1/12 w-96 h-96 border-r border-b border-blueprint-800/20 pointer-events-none"></div>
+        
+        <div class="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10 w-full">
+            <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                <div class="inline-flex items-center space-x-2 px-3 py-1 bg-blueprint-900/50 border border-blueprint-700/50 rounded-full text-sm text-structure-accent">
+                    <span class="w-2 h-2 rounded-full bg-structure-accent animate-ping"></span>
+                    <span>2026 신입 건축공학 엔지니어 양성</span>
+                </div>
+                
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-none text-white">
+                    안전함을 설계하고<br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-300 to-indigo-400">가치를 시공합니다</span>
+                </h1>
+                
+                <p class="text-slate-400 text-lg md:text-xl max-w-2xl font-light mx-auto lg:mx-0">
+                    구조 안전성과 첨단 스마트 건설 공법(BIM)을 융합하여 미래 지향적인 친환경 공간을 제안하는 <strong>건축공학 예비 엔지니어 한규현</strong>입니다. 구조 해석 소프트웨어 숙련도와 철저한 현장 안전 지향 마인드를 지녔습니다.
+                </p>
+
+                <!-- 퀵스펙 태그 -->
+                <div class="flex flex-wrap justify-center lg:justify-start gap-3 pt-2 text-xs text-slate-300 font-mono">
+                    <span class="bg-blueprint-900/80 border border-blueprint-800 px-3 py-1.5 rounded-md"><i class="fa-solid fa-calculator mr-1.5 text-blue-400"></i>MIDAS Gen 수료</span>
+                    <span class="bg-blueprint-900/80 border border-blueprint-800 px-3 py-1.5 rounded-md"><i class="fa-solid fa-cube mr-1.5 text-blue-400"></i>Revit BIM 1급</span>
+                    <span class="bg-blueprint-900/80 border border-blueprint-800 px-3 py-1.5 rounded-md"><i class="fa-solid fa-shield-halved mr-1.5 text-blue-400"></i>산업안전기사 필기합격</span>
+                </div>
+
+                <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 pt-4">
+                    <a href="#portfolio" class="px-8 py-3.5 bg-blueprint-600 hover:bg-blueprint-500 text-white rounded-lg font-medium shadow-lg shadow-blueprint-600/30 transition-all transform hover:-translate-y-0.5">
+                        <i class="fa-solid fa-folder-open mr-2"></i>포트폴리오 보기
+                    </a>
+                    <a href="#simulator" class="px-8 py-3.5 bg-slate-900/60 hover:bg-slate-800/80 text-slate-200 border border-blueprint-800 rounded-lg font-medium transition-all transform hover:-translate-y-0.5 backdrop-blur-sm">
+                        <i class="fa-solid fa-vial-circle-check mr-2 text-structure-accent"></i>구조 시뮬레이션 체험
+                    </a>
+                </div>
+            </div>
+
+            <!-- 우측 대형 아이소메트릭 도면 형상 일러스트 -->
+            <div class="lg:col-span-5 flex justify-center items-center relative">
+                <div class="relative w-full max-w-[400px] h-[400px] bg-blueprint-900/20 border-2 border-dashed border-blueprint-800/40 rounded-2xl p-6 flex flex-col justify-between items-center overflow-hidden animate-float">
+                    <div class="absolute inset-0 blueprint-grid opacity-30"></div>
+                    
+                    <!-- 기술적 드로잉 기호들 -->
+                    <div class="w-full flex justify-between text-[10px] font-mono text-blueprint-600">
+                        <span>L: 12.50m</span>
+                        <span>H: 8.40m</span>
+                        <span>[DWG. NO: A-01]</span>
+                    </div>
+
+                    <!-- 중앙 빌딩 골조 그래픽 (SVG) -->
+                    <svg class="w-64 h-64 text-blue-500/80 drop-shadow-[0_0_15px_rgba(59,130,246,0.3)]" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- 구조 격자선 -->
+                        <line x1="20" y1="180" x2="180" y2="180" stroke="#1e3a8a" stroke-width="2" />
+                        <line x1="40" y1="180" x2="40" y2="20" stroke="#1e40af" stroke-dasharray="4 4" />
+                        <line x1="100" y1="180" x2="100" y2="20" stroke="#1e40af" stroke-dasharray="4 4" />
+                        <line x1="160" y1="180" x2="160" y2="20" stroke="#1e40af" stroke-dasharray="4 4" />
+                        <line x1="20" y1="120" x2="180" y2="120" stroke="#1e40af" stroke-dasharray="4 4" />
+                        <line x1="20" y1="60" x2="180" y2="60" stroke="#1e40af" stroke-dasharray="4 4" />
+
+                        <!-- 기둥 및 보 실선 -->
+                        <!-- 1층 -->
+                        <rect x="36" y="120" width="8" height="60" fill="currentColor" opacity="0.4" stroke="#3b82f6" stroke-width="2"/>
+                        <rect x="96" y="120" width="8" height="60" fill="currentColor" opacity="0.4" stroke="#3b82f6" stroke-width="2"/>
+                        <rect x="156" y="120" width="8" height="60" fill="currentColor" opacity="0.4" stroke="#3b82f6" stroke-width="2"/>
+                        <!-- 2층 보 -->
+                        <rect x="36" y="112" width="128" height="8" fill="currentColor" opacity="0.6" stroke="#3b82f6" stroke-width="2"/>
+                        
+                        <!-- 2층 기둥 -->
+                        <rect x="36" y="52" width="8" height="60" fill="currentColor" opacity="0.4" stroke="#3b82f6" stroke-width="2"/>
+                        <rect x="96" y="52" width="8" height="60" fill="currentColor" opacity="0.4" stroke="#3b82f6" stroke-width="2"/>
+                        <rect x="156" y="52" width="8" height="60" fill="currentColor" opacity="0.4" stroke="#3b82f6" stroke-width="2"/>
+                        <!-- 지붕 보 -->
+                        <rect x="36" y="44" width="128" height="8" fill="currentColor" opacity="0.6" stroke="#3b82f6" stroke-width="2"/>
+                        
+                        <!-- 지붕 트러스 경사 부재 -->
+                        <line x1="36" y1="44" x2="100" y2="10" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="164" y1="44" x2="100" y2="10" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+                        <line x1="100" y1="44" x2="100" y2="10" stroke="#f59e0b" stroke-width="2"/>
+                        <line x1="68" y1="44" x2="100" y2="10" stroke="#1e3a8a" stroke-width="1.5"/>
+                        <line x1="132" y1="44" x2="100" y2="10" stroke="#1e3a8a" stroke-width="1.5"/>
+                    </svg>
+
+                    <div class="w-full flex justify-between items-center text-xs">
+                        <span class="text-slate-400 font-mono"><i class="fa-solid fa-code-branch mr-1 text-green-400"></i>VER. 3.2</span>
+                        <div class="flex space-x-1">
+                            <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-yellow-500"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-green-500"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 자기소개 섹션 -->
+    <section id="about" class="py-24 bg-blueprint-900/20 border-t border-b border-blueprint-900/50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold tracking-widest text-structure-accent uppercase font-mono">ABOUT ME</h2>
+                <p class="text-3xl font-extrabold text-white mt-2">건축공학을 가슴에 품은 엔지니어</p>
+                <div class="w-16 h-1 bg-blueprint-600 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                <!-- 프로필 이미지 및 기본 정보 카드 -->
+                <div class="lg:col-span-4 bg-blueprint-950/60 p-6 rounded-2xl border border-blueprint-800/80 shadow-xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-blueprint-600/5 rounded-full blur-2xl"></div>
+                    <div class="flex flex-col items-center text-center space-y-4">
+                        <!-- 프로필 대체 아바타 아이콘 및 디자인 -->
+                        <div class="w-32 h-32 bg-gradient-to-br from-blueprint-700 to-indigo-900 rounded-full border-4 border-blueprint-800 shadow-inner flex items-center justify-center relative overflow-hidden group">
+                            <i class="fa-solid fa-user-gear text-5xl text-slate-200 transition-all duration-300 group-hover:scale-110"></i>
+                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity text-xs font-semibold text-white">현장/연구</div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white">한규현</h3>
+                            <p class="text-sm text-blueprint-400 font-mono mt-1">2000. 02. 11 (만 26세)</p>
+                        </div>
+                        <hr class="w-full border-blueprint-900">
+                        <div class="w-full space-y-3.5 text-left text-sm text-slate-300">
+                            <div class="flex items-center space-x-3">
+                                <i class="fa-solid fa-graduation-cap text-blueprint-500 w-5"></i>
+                                <span>한국대학교 건축공학과 졸업예정</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <i class="fa-solid fa-star-of-life text-blueprint-500 w-5"></i>
+                                <span>건축구조 및 시공관리 세부전공</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <i class="fa-solid fa-envelope text-blueprint-500 w-5"></i>
+                                <span>hkh021129@naver.com</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <i class="fa-solid fa-phone text-blueprint-500 w-5"></i>
+                                <span>010-1234-5678</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <i class="fa-solid fa-location-dot text-blueprint-500 w-5"></i>
+                                <span>서울특별시 서초구</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 핵심 가치관 및 강점 기술 -->
+                <div class="lg:col-span-8 space-y-6">
+                    <h4 class="text-xl font-bold text-white flex items-center">
+                        <i class="fa-solid fa-quote-left mr-2.5 text-blueprint-500"></i>
+                        구조 안전성은 타협 없는 생명의 가치입니다.
+                    </h4>
+                    <p class="text-slate-300 leading-relaxed font-light">
+                        건축공학을 전공하며 설계 디자인을 실제 안전한 현실로 구체화하는 <strong>'구조 설계'와 '시공 엔지니어링'</strong>의 매력에 깊이 매료되었습니다. 화려한 건축물이 안전하게 자립하기 위한 구조적 뼈대를 해석하고 최적의 설계 방안을 검토하는 과정에 가장 자신 있습니다.
+                    </p>
+                    <p class="text-slate-300 leading-relaxed font-light">
+                        단순히 기사 자격 취득에 그치지 않고, <strong>MIDAS Gen, Revit, AutoCAD</strong> 등 전공 소프트웨어를 학기 내내 실제 고층 오피스 프로젝트에 적용해 보며 설계 역량을 내실 있게 다져왔습니다.
+                    </p>
+
+                    <!-- 핵심 가치 3요소 카드 -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
+                        <div class="p-5 bg-blueprint-900/30 border border-blueprint-800/60 rounded-xl space-y-2">
+                            <div class="w-10 h-10 bg-indigo-950 border border-blue-500 rounded-lg flex items-center justify-center text-blue-400">
+                                <i class="fa-solid fa-compass-drafting text-lg"></i>
+                            </div>
+                            <h5 class="font-bold text-white">정밀한 구조 해석</h5>
+                            <p class="text-xs text-slate-400">MIDAS 프로그램을 활용하여 하중 조합, 모멘트 분배, 가새 배치 등 구조 한계 상태를 철저히 검토합니다.</p>
+                        </div>
+
+                        <div class="p-5 bg-blueprint-900/30 border border-blueprint-800/60 rounded-xl space-y-2">
+                            <div class="w-10 h-10 bg-amber-950 border border-amber-500 rounded-lg flex items-center justify-center text-amber-400">
+                                <i class="fa-solid fa-cubes-stacked text-lg"></i>
+                            </div>
+                            <h5 class="font-bold text-white">스마트 BIM 연계</h5>
+                            <p class="text-xs text-slate-400">Revit을 활용한 3D 가상 시공으로 사전에 간섭을 파악하고 물량을 자동 정산하여 시공비를 절감합니다.</p>
+                        </div>
+
+                        <div class="p-5 bg-blueprint-900/30 border border-blueprint-800/60 rounded-xl space-y-2">
+                            <div class="w-10 h-10 bg-emerald-950 border border-emerald-500 rounded-lg flex items-center justify-center text-emerald-400">
+                                <i class="fa-solid fa-hard-hat text-lg"></i>
+                            </div>
+                            <h5 class="font-bold text-white">무재해 시공 관리</h5>
+                            <p class="text-xs text-slate-400">산업안전 관련 기준 및 공정표 관리를 명확히 하여 최적의 가설 계획과 시공 안전을 리드합니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 인터랙티브 구조해석 시뮬레이터 섹션 -->
+    <section id="simulator" class="py-24 relative blueprint-grid">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-xs font-bold tracking-widest text-structure-accent uppercase font-mono">ENGINEERING SIMULATOR</h2>
+                <p class="text-3xl font-extrabold text-white mt-2">트러스 교량 하중 해석 시뮬레이터</p>
+                <p class="text-sm text-slate-400 mt-2">원하는 조인트를 클릭해 하중을 증가시킬 수 있습니다. 압축재(적색)와 인장재(청색)의 실시간 힘 분포를 관찰해 보세요.</p>
+                <div class="w-16 h-1 bg-blueprint-600 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- 시뮬레이터 구역 -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                <!-- 제어 패널 -->
+                <div class="lg:col-span-4 bg-blueprint-900/40 p-6 rounded-2xl border border-blueprint-800 flex flex-col justify-between">
+                    <div class="space-y-6">
+                        <div class="border-b border-blueprint-800 pb-4">
+                            <h3 class="text-lg font-bold text-white"><i class="fa-solid fa-circle-info mr-2 text-blueprint-500"></i>작동 원리</h3>
+                            <p class="text-xs text-slate-400 mt-1 leading-relaxed">
+                                트러스(Truss)는 부재들이 삼각형 형태로 접합되어 구부러짐(모멘트) 없이 오직 축력(인장, 압축)만 전달받는 효율적인 건축구조 형태입니다.
+                            </p>
+                        </div>
+
+                        <div class="space-y-3">
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400">설정 메뉴</label>
+                            
+                            <!-- 하중 조절 슬라이더 -->
+                            <div>
+                                <div class="flex justify-between text-xs mb-1.5">
+                                    <span class="text-slate-300">작용 하중(Force)</span>
+                                    <span id="force-val" class="text-structure-accent font-mono font-bold">120 kN</span>
+                                </div>
+                                <input type="range" id="force-slider" min="20" max="300" value="120" class="w-full h-1.5 bg-blueprint-950 rounded-lg appearance-none cursor-pointer accent-blueprint-500">
+                            </div>
+
+                            <!-- 트러스 유형 선택 -->
+                            <div>
+                                <label class="text-xs text-slate-300 block mb-1">교량 가새 구조 유형</label>
+                                <select id="truss-type" class="w-full bg-blueprint-950 border border-blueprint-800 text-xs text-slate-200 rounded-lg p-2.5 focus:border-blueprint-500 focus:outline-none">
+                                    <option value="pratt">프랫 트러스 (Pratt Truss)</option>
+                                    <option value="warren">워렌 트러스 (Warren Truss)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="p-4 bg-blueprint-950/60 rounded-xl space-y-2 border border-blueprint-800 text-xs">
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">지점(Support) 조건:</span>
+                                <span class="text-slate-200 font-bold">단순 지지 (힌지 & 롤러)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">구간 길이(Span):</span>
+                                <span class="text-slate-200 font-mono">40 m</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-400">구조 한계 응력:</span>
+                                <span class="text-red-400 font-mono font-bold">Fy = 325 MPa</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-6 space-y-2">
+                        <!-- 안내 레전드 -->
+                        <div class="flex justify-between items-center text-xs border-t border-blueprint-800 pt-4">
+                            <div class="flex items-center space-x-1.5">
+                                <span class="w-3 h-3 bg-structure-compression rounded-sm"></span>
+                                <span class="text-slate-300">압축재 (Compression)</span>
+                            </div>
+                            <div class="flex items-center space-x-1.5">
+                                <span class="w-3 h-3 bg-structure-tension rounded-sm"></span>
+                                <span class="text-slate-300">인장재 (Tension)</span>
+                            </div>
+                        </div>
+                        <button id="reset-sim-btn" class="w-full py-2.5 mt-2 bg-slate-800 hover:bg-slate-700 text-xs font-bold tracking-wide rounded-lg transition-colors border border-blueprint-800">
+                            하중 초기화
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 캔버스 및 시각화 -->
+                <div class="lg:col-span-8 bg-blueprint-950/90 rounded-2xl border border-blueprint-800/80 p-4 flex flex-col justify-between relative shadow-2xl">
+                    <div class="absolute top-4 right-4 bg-blueprint-900/60 text-[10px] font-mono border border-blueprint-700 px-2 py-1 rounded text-blueprint-400">
+                        INTERACTIVE CANVAS v1.1
+                    </div>
+                    
+                    <div class="w-full flex-grow flex items-center justify-center py-4">
+                        <!-- 실제 시뮬레이션 캔버스 -->
+                        <canvas id="trussCanvas" class="bg-blueprint-950 border border-blueprint-900 rounded-xl w-full max-h-[380px] aspect-[16/9] cursor-pointer"></canvas>
+                    </div>
+
+                    <div class="flex justify-between items-center text-xs text-slate-400 px-2">
+                        <span><i class="fa-solid fa-computer-mouse mr-1.5 text-blueprint-500"></i>상단 조인트를 클릭하여 하중 지점을 이동해보세요</span>
+                        <span id="node-info" class="text-slate-300 font-mono font-semibold">선택된 노드: Node 5</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 직무 보유 역량 (Skills) 섹션 -->
+    <section id="skills" class="py-24 bg-blueprint-900/20 border-t border-b border-blueprint-900/50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold tracking-widest text-structure-accent uppercase font-mono">CAPABILITIES</h2>
+                <p class="text-3xl font-extrabold text-white mt-2">기술 스택 및 핵심 역량</p>
+                <div class="w-16 h-1 bg-blueprint-600 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Engineering S/W -->
+                <div class="bg-blueprint-950 p-6 rounded-2xl border border-blueprint-800/60 space-y-5">
+                    <h3 class="text-lg font-bold text-white flex items-center border-b border-blueprint-900 pb-3">
+                        <i class="fa-solid fa-cubes text-blueprint-500 mr-2.5"></i>Engineering S/W
+                    </h3>
+                    <div class="space-y-4">
+                        <!-- Skill 1 -->
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-slate-200">MIDAS Gen (구조해석)</span>
+                                <span class="text-blueprint-400 font-mono">90%</span>
+                            </div>
+                            <div class="w-full bg-blueprint-900 h-2 rounded-full overflow-hidden">
+                                <div class="bg-gradient-to-r from-blueprint-600 to-indigo-500 h-full rounded-full" style="width: 90%"></div>
+                            </div>
+                            <p class="text-[11px] text-slate-400 mt-1">고정 하중 및 적재 하중에 대한 응력해석 및 철골 부재 단면 검토 가능</p>
+                        </div>
+                        <!-- Skill 2 -->
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-slate-200">Revit (3D BIM)</span>
+                                <span class="text-blueprint-400 font-mono">85%</span>
+                            </div>
+                            <div class="w-full bg-blueprint-900 h-2 rounded-full overflow-hidden">
+                                <div class="bg-gradient-to-r from-blueprint-600 to-indigo-500 h-full rounded-full" style="width: 85%"></div>
+                            </div>
+                            <p class="text-[11px] text-slate-400 mt-1">구조/건축 BIM 모델링 수행 및 콘크리트 및 거푸집 물량 자동 추출 연계 가능</p>
+                        </div>
+                        <!-- Skill 3 -->
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-slate-200">AutoCAD (2D 도면작성)</span>
+                                <span class="text-blueprint-400 font-mono">95%</span>
+                            </div>
+                            <div class="w-full bg-blueprint-900 h-2 rounded-full overflow-hidden">
+                                <div class="bg-gradient-to-r from-blueprint-600 to-indigo-500 h-full rounded-full" style="width: 95%"></div>
+                            </div>
+                            <p class="text-[11px] text-slate-400 mt-1">상세 배근도, 단면도 등 설계 표준 규격에 맞춘 빠른 도면 생성 및 수정</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Professional Knowledge -->
+                <div class="bg-blueprint-950 p-6 rounded-2xl border border-blueprint-800/60 space-y-5">
+                    <h3 class="text-lg font-bold text-white flex items-center border-b border-blueprint-900 pb-3">
+                        <i class="fa-solid fa-calculator text-blueprint-500 mr-2.5"></i>전공 실무 지식
+                    </h3>
+                    <div class="space-y-4">
+                        <!-- Skill 1 -->
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-slate-200">철근콘크리트 & 강구조 해석</span>
+                                <span class="text-blueprint-400 font-mono">88%</span>
+                            </div>
+                            <div class="w-full bg-blueprint-900 h-2 rounded-full overflow-hidden">
+                                <div class="bg-gradient-to-r from-blueprint-600 to-indigo-500 h-full rounded-full" style="width: 88%"></div>
+                            </div>
+                            <p class="text-[11px] text-slate-400 mt-1">한계상태설계법 및 허용응력설계법의 이론적 기반을 탄탄히 다짐</p>
+                        </div>
+                        <!-- Skill 2 -->
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-slate-200">적산 및 시공 견적</span>
+                                <span class="text-blueprint-400 font-mono">80%</span>
+                            </div>
+                            <div class="w-full bg-blueprint-900 h-2 rounded-full overflow-hidden">
+                                <div class="bg-gradient-to-r from-blueprint-600 to-indigo-500 h-full rounded-full" style="width: 80%"></div>
+                            </div>
+                            <p class="text-[11px] text-slate-400 mt-1">도면 해독에 기반한 터파기, 조적, 철콘 부재의 재료 수량 수기 산출</p>
+                        </div>
+                        <!-- Skill 3 -->
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-slate-200">건설안전 및 품질관리</span>
+                                <span class="text-blueprint-400 font-mono">85%</span>
+                            </div>
+                            <div class="w-full bg-blueprint-900 h-2 rounded-full overflow-hidden">
+                                <div class="bg-gradient-to-r from-blueprint-600 to-indigo-500 h-full rounded-full" style="width: 85%"></div>
+                            </div>
+                            <p class="text-[11px] text-slate-400 mt-1">건설안전기준 및 유해위험방지 계획에 명시된 위험성 평가 이해도 높음</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Certificates & Tools -->
+                <div class="bg-blueprint-950 p-6 rounded-2xl border border-blueprint-800/60 space-y-4">
+                    <h3 class="text-lg font-bold text-white flex items-center border-b border-blueprint-900 pb-3">
+                        <i class="fa-solid fa-award text-blueprint-500 mr-2.5"></i>자격사항 및 어학
+                    </h3>
+                    <div class="space-y-3.5 text-xs text-slate-300">
+                        <div class="flex justify-between items-center p-2 bg-blueprint-900/40 rounded border border-blueprint-800">
+                            <div>
+                                <span class="block font-bold text-white">건축기사 자격증 취득예정</span>
+                                <span class="text-[10px] text-slate-400">한국산업인력공단 (필기합격, 실기 응시중)</span>
+                            </div>
+                            <span class="px-2 py-0.5 bg-blue-900/50 border border-blue-700 text-blue-300 text-[10px] rounded">합격예정</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2 bg-blueprint-900/40 rounded border border-blueprint-800">
+                            <div>
+                                <span class="block font-bold text-white">산업안전기사</span>
+                                <span class="text-[10px] text-slate-400">한국산업인력공단 (필기합격)</span>
+                            </div>
+                            <span class="px-2 py-0.5 bg-yellow-900/50 border border-yellow-700 text-yellow-300 text-[10px] rounded">필기 합격</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2 bg-blueprint-900/40 rounded border border-blueprint-800">
+                            <div>
+                                <span class="block font-bold text-white">AutoCAD 1급 기술자격</span>
+                                <span class="text-[10px] text-slate-400">한국생산성본부(KPC)</span>
+                            </div>
+                            <span class="px-2 py-0.5 bg-emerald-900/50 border border-emerald-700 text-emerald-300 text-[10px] rounded">취득</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2 bg-blueprint-900/40 rounded border border-blueprint-800">
+                            <div>
+                                <span class="block font-bold text-white">TOEIC Speaking 140점</span>
+                                <span class="text-[10px] text-slate-400">한국TOEIC위원회</span>
+                            </div>
+                            <span class="px-2 py-0.5 bg-purple-900/50 border border-purple-700 text-purple-300 text-[10px] rounded">IM3</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 포트폴리오 프로젝트 섹션 -->
+    <section id="portfolio" class="py-24 blueprint-grid">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <h2 class="text-xs font-bold tracking-widest text-structure-accent uppercase font-mono">PORTFOLIO</h2>
+                <p class="text-3xl font-extrabold text-white mt-2">수행 프로젝트 및 학업 설계물</p>
+                <div class="w-16 h-1 bg-blueprint-600 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- 필터 제어 버튼 -->
+            <div class="flex flex-wrap justify-center gap-2 md:gap-4 mb-12" id="filter-btn-group">
+                <button data-filter="all" class="filter-btn active px-5 py-2 rounded-lg text-sm font-semibold transition-all bg-blueprint-600 text-white shadow-md">
+                    전체보기
+                </button>
+                <button data-filter="structure" class="filter-btn px-5 py-2 rounded-lg text-sm font-semibold transition-all bg-blueprint-900/50 border border-blueprint-800 text-slate-300 hover:text-white hover:bg-blueprint-800/50">
+                    구조해석/설계
+                </button>
+                <button data-filter="bim" class="filter-btn px-5 py-2 rounded-lg text-sm font-semibold transition-all bg-blueprint-900/50 border border-blueprint-800 text-slate-300 hover:text-white hover:bg-blueprint-800/50">
+                    BIM 가상시공
+                </button>
+                <button data-filter="planning" class="filter-btn px-5 py-2 rounded-lg text-sm font-semibold transition-all bg-blueprint-900/50 border border-blueprint-800 text-slate-300 hover:text-white hover:bg-blueprint-800/50">
+                    시공/공정계획
+                </button>
+            </div>
+
+            <!-- 프로젝트 카드 그리드 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="portfolio-grid">
+                
+                <!-- Project Card 1 -->
+                <div class="portfolio-item bg-blueprint-950 rounded-2xl border border-blueprint-800 overflow-hidden shadow-lg hover:shadow-blueprint-900/40 transition-all duration-300 transform hover:-translate-y-1.5" data-category="structure">
+                    <div class="h-48 bg-slate-900 relative flex items-center justify-center overflow-hidden">
+                        <!-- 대체 플레이스홀더 이미지 대신 이쁜 그래픽 벡터 패턴 구성 -->
+                        <div class="absolute inset-0 blueprint-grid opacity-25"></div>
+                        <i class="fa-solid fa-bezier-curve text-6xl text-blue-500/30"></i>
+                        <span class="absolute bottom-3 left-3 px-2 py-1 bg-blue-900/80 border border-blue-700 text-blue-300 text-[10px] rounded font-mono">MIDAS GEN</span>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="text-xs font-mono text-structure-accent">구조해석 및 보강 설계</div>
+                        <h3 class="text-lg font-bold text-white leading-tight">지진 하중을 고려한 초고층 오피스 빌딩 구조 안전성 해석</h3>
+                        <p class="text-xs text-slate-400 line-clamp-2">MIDAS Gen을 사용하여 25층 콘크리트 전단벽식 오피스 구조물의 풍하중 및 지진하중 정밀 해석을 진행하였습니다.</p>
+                        <div class="pt-2 flex justify-between items-center border-t border-blueprint-900">
+                            <span class="text-[11px] text-slate-400"><i class="fa-regular fa-calendar mr-1"></i>3학년 2학기 전공캡스톤</span>
+                            <button onclick="openModal('proj1')" class="text-xs font-bold text-blueprint-400 hover:text-blueprint-300 flex items-center">
+                                상세보기 <i class="fa-solid fa-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 -->
+                <div class="portfolio-item bg-blueprint-950 rounded-2xl border border-blueprint-800 overflow-hidden shadow-lg hover:shadow-blueprint-900/40 transition-all duration-300 transform hover:-translate-y-1.5" data-category="bim">
+                    <div class="h-48 bg-slate-900 relative flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 blueprint-grid opacity-25"></div>
+                        <i class="fa-solid fa-cubes-stacked text-6xl text-cyan-500/30"></i>
+                        <span class="absolute bottom-3 left-3 px-2 py-1 bg-cyan-900/80 border border-cyan-700 text-cyan-300 text-[10px] rounded font-mono">REVIT / DYNAMO</span>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="text-xs font-mono text-structure-accent">BIM 모델링 / 자동화</div>
+                        <h3 class="text-lg font-bold text-white leading-tight">스마트 BIM 기반 친환경 오피스 타워 건축 모델링 및 에너지 분석</h3>
+                        <p class="text-xs text-slate-400 line-clamp-2">Revit을 활용해 3차원 상세 구조/건축 모델을 구축하고 다이나모 스크립트를 적용해 일조 영향 평가 및 자재 물량 자동 계산을 수행하였습니다.</p>
+                        <div class="pt-2 flex justify-between items-center border-t border-blueprint-900">
+                            <span class="text-[11px] text-slate-400"><i class="fa-regular fa-calendar mr-1"></i>4학년 1학기 건축종합설계</span>
+                            <button onclick="openModal('proj2')" class="text-xs font-bold text-blueprint-400 hover:text-blueprint-300 flex items-center">
+                                상세보기 <i class="fa-solid fa-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 -->
+                <div class="portfolio-item bg-blueprint-950 rounded-2xl border border-blueprint-800 overflow-hidden shadow-lg hover:shadow-blueprint-900/40 transition-all duration-300 transform hover:-translate-y-1.5" data-category="planning">
+                    <div class="h-48 bg-slate-900 relative flex items-center justify-center overflow-hidden">
+                        <div class="absolute inset-0 blueprint-grid opacity-25"></div>
+                        <i class="fa-solid fa-sitemap text-6xl text-emerald-500/30"></i>
+                        <span class="absolute bottom-3 left-3 px-2 py-1 bg-emerald-900/80 border border-emerald-700 text-emerald-300 text-[10px] rounded font-mono">MS PROJECT</span>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="text-xs font-mono text-structure-accent">시공 관리 및 공정 분석</div>
+                        <h3 class="text-lg font-bold text-white leading-tight">모듈러 공법을 적용한 청년주택 신축공사 가설 및 공정계획 수립</h3>
+                        <p class="text-xs text-slate-400 line-clamp-2">도심 협소 부지 내 조립식 모듈러 공법 적용 시 최적 장비 가동 동선 설계와 CPM 공정표 작성으로 기존 타 공법 대비 공기 20% 단축 경로를 증명하였습니다.</p>
+                        <div class="pt-2 flex justify-between items-center border-t border-blueprint-900">
+                            <span class="text-[11px] text-slate-400"><i class="fa-regular fa-calendar mr-1"></i>2025 학과 학술제 출품</span>
+                            <button onclick="openModal('proj3')" class="text-xs font-bold text-blueprint-400 hover:text-blueprint-300 flex items-center">
+                                상세보기 <i class="fa-solid fa-arrow-right ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 프로젝트 상세 보기 모달 창 구현 -->
+    <div id="project-modal" class="fixed inset-0 z-50 overflow-y-auto hidden bg-black/80 flex items-center justify-center p-4">
+        <div class="bg-blueprint-950 w-full max-w-4xl rounded-2xl border border-blueprint-800 overflow-hidden relative shadow-2xl">
+            <!-- 모달 헤더 -->
+            <div class="flex items-center justify-between px-6 py-4 bg-blueprint-900/40 border-b border-blueprint-800">
+                <span id="modal-category" class="text-xs font-mono text-structure-accent uppercase">카테고리</span>
+                <button onclick="closeModal()" class="text-slate-400 hover:text-white text-xl">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <!-- 모달 콘텐츠 -->
+            <div class="p-6 md:p-8 space-y-6 max-h-[80vh] overflow-y-auto" id="modal-body-content">
+                <!-- 동적으로 채워질 예정 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 경력 및 대학활동 (Timeline) 섹션 -->
+    <section id="timeline" class="py-24 bg-blueprint-900/20 border-t border-b border-blueprint-900/50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold tracking-widest text-structure-accent uppercase font-mono">TIMELINE</h2>
+                <p class="text-3xl font-extrabold text-white mt-2">학습 여정 및 대외 활동</p>
+                <div class="w-16 h-1 bg-blueprint-600 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="relative border-l-2 border-blueprint-800 max-w-4xl mx-auto pl-6 sm:pl-8 space-y-12">
+                <!-- 타임라인 아이템 1 -->
+                <div class="relative">
+                    <span class="absolute -left-[35px] sm:-left-[43px] top-1.5 w-6 h-6 rounded-full bg-blueprint-950 border-4 border-blueprint-600 flex items-center justify-center text-white z-10"></span>
+                    <div class="space-y-2">
+                        <span class="inline-block bg-blueprint-900 text-blueprint-400 text-xs font-mono font-bold px-3 py-1 rounded">2022. 03 ~ 2026. 02</span>
+                        <h3 class="text-xl font-bold text-white">한국대학교 건축공학과 전공 이수</h3>
+                        <p class="text-sm text-slate-400">전공 평점: <strong>3.95 / 4.5</strong> (최종 학기 전공 평점 우수 성적 장학생 선정)</p>
+                        <p class="text-xs text-slate-400 leading-relaxed">구조역학, 철근콘크리트구조, 강구조설계, 건축시공학, 건설공정관리, 가설공학 등의 전공 심화 지식을 명확히 학습하며, 구조적 논리와 현장 기술적 프로세스를 정합성 있게 이해하는 훈련을 수료했습니다.</p>
+                    </div>
+                </div>
+
+                <!-- 타임라인 아이템 2 -->
+                <div class="relative">
+                    <span class="absolute -left-[35px] sm:-left-[43px] top-1.5 w-6 h-6 rounded-full bg-blueprint-950 border-4 border-blueprint-600 flex items-center justify-center text-white z-10"></span>
+                    <div class="space-y-2">
+                        <span class="inline-block bg-blueprint-900 text-blueprint-400 text-xs font-mono font-bold px-3 py-1 rounded">2025. 07 ~ 2025. 08</span>
+                        <h3 class="text-xl font-bold text-white">한성종합건설 시공관리 현장 실습생 (인턴)</h3>
+                        <p class="text-sm text-slate-400">송파구 오피스텔 신축공사 현장 (가구조 및 골조공사 파트 지원)</p>
+                        <ul class="text-xs text-slate-400 list-disc pl-5 space-y-1">
+                            <li>일일 작업계획 수립 지원 및 신규 근로자 안전교육 운영 보조</li>
+                            <li>실제 콘크리트 슬럼프 테스트 및 공시체 제작과 같은 품질 테스트 직접 참여</li>
+                            <li>현장 CAD 도면 오차 체크(실측 대조) 및 먹매김 보조를 통한 시공 오차 제거 기여</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 타임라인 아이템 3 -->
+                <div class="relative">
+                    <span class="absolute -left-[35px] sm:-left-[43px] top-1.5 w-6 h-6 rounded-full bg-blueprint-950 border-4 border-blueprint-600 flex items-center justify-center text-white z-10"></span>
+                    <div class="space-y-2">
+                        <span class="inline-block bg-blueprint-900 text-blueprint-400 text-xs font-mono font-bold px-3 py-1 rounded">2025. 11</span>
+                        <h3 class="text-xl font-bold text-white">제18회 전국 대학생 건축공학 학술제 출품</h3>
+                        <p class="text-sm text-slate-400">스마트 시공 및 재료 분야 부문 포스터 게재 및 장려상 수상</p>
+                        <p class="text-xs text-slate-400 leading-relaxed">"경량 프리캐스트 모듈 결합 강도 향상을 위한 에폭시-콘크리트 하이브리드 접합재 설계"를 주제로 발표팀의 수치 해석 부분을 주도하여 우수한 학술적 안전성을 검증받았습니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 문의하기 (Contact) 섹션 -->
+    <section id="contact" class="py-24 relative blueprint-grid">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold tracking-widest text-structure-accent uppercase font-mono">CONTACT</h2>
+                <p class="text-3xl font-extrabold text-white mt-2">함께 성장할 기업을 기다립니다</p>
+                <div class="w-16 h-1 bg-blueprint-600 mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch max-w-5xl mx-auto">
+                <!-- 안내 및 SNS 링크 -->
+                <div class="lg:col-span-5 bg-blueprint-900/40 p-8 rounded-2xl border border-blueprint-800 flex flex-col justify-between space-y-8">
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold text-white">포트폴리오 검토에<br>감사드립니다.</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            건축공학과 전공자로서 안전을 책임지는 엔지니어가 되기 위해 항상 열린 배움과 신중하고 안전한 분석을 지향하고 있습니다.<br><br>
+                            채용 및 면접 기회 제공은 물론, 프로젝트 관련 간단한 피드백이 있으시다면 언제든 우측 폼 혹은 아래 연락처로 이메일을 주시면 감사하겠습니다.
+                        </p>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-3.5 text-sm text-slate-300">
+                            <i class="fa-solid fa-phone text-structure-accent w-5 text-center"></i>
+                            <span>010-1234-5678</span>
+                        </div>
+                        <div class="flex items-center space-x-3.5 text-sm text-slate-300">
+                            <i class="fa-solid fa-envelope text-structure-accent w-5 text-center"></i>
+                            <span>hkh021129@naver.com</span>
+                        </div>
+                        <div class="flex items-center space-x-3.5 text-sm text-slate-300">
+                            <i class="fa-brands fa-github text-structure-accent w-5 text-center"></i>
+                            <span class="hover:text-white cursor-pointer">github.com/han-architect-eng</span>
+                        </div>
+                        <div class="pt-2">
+                            <a href="https://padlet.com/hkh021129/padlet-ffoa6fcq8pg88qgz" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center w-full py-3 px-4 bg-amber-500/10 hover:bg-amber-500/20 text-structure-accent border border-amber-500/30 rounded-xl font-bold text-sm transition-all shadow-md shadow-amber-500/5">
+                                <i class="fa-solid fa-book-open mr-2"></i>온라인 방명록 남기기 (Padlet) <i class="fa-solid fa-up-right-from-square ml-1.5 text-[10px]"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 문의 이메일 작성 폼 -->
+                <div class="lg:col-span-7 bg-blueprint-950 border border-blueprint-800 p-8 rounded-2xl shadow-xl">
+                    <form id="contact-form" class="space-y-5">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold uppercase tracking-wider text-slate-400">회사명 / 소속</label>
+                                <input type="text" id="contact-company" required placeholder="예: 한빛건설 인사과" class="w-full bg-blueprint-900/50 border border-blueprint-800 text-slate-100 rounded-lg p-3 text-sm focus:border-blueprint-500 focus:outline-none">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold uppercase tracking-wider text-slate-400">보내시는 분 성함</label>
+                                <input type="text" id="contact-name" required placeholder="예: 홍길동 팀장" class="w-full bg-blueprint-900/50 border border-blueprint-800 text-slate-100 rounded-lg p-3 text-sm focus:border-blueprint-500 focus:outline-none">
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold uppercase tracking-wider text-slate-400">답변받으실 이메일</label>
+                            <input type="email" id="contact-email" required placeholder="example@company.com" class="w-full bg-blueprint-900/50 border border-blueprint-800 text-slate-100 rounded-lg p-3 text-sm focus:border-blueprint-500 focus:outline-none">
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold uppercase tracking-wider text-slate-400">메시지 내용</label>
+                            <textarea id="contact-message" required rows="5" placeholder="규현 님의 이력과 구조 해석 프로젝트에 흥미가 있습니다. 면접 면담을 조율하고 싶습니다." class="w-full bg-blueprint-900/50 border border-blueprint-800 text-slate-100 rounded-lg p-3 text-sm focus:border-blueprint-500 focus:outline-none"></textarea>
+                        </div>
+
+                        <!-- 폼 제출 버튼 -->
+                        <button type="submit" class="w-full py-3.5 bg-blueprint-600 hover:bg-blueprint-500 text-white rounded-lg font-bold text-sm shadow-md transition-all">
+                            <i class="fa-solid fa-paper-plane mr-2"></i>메시지 전송하기
+                        </button>
+                    </form>
+
+                    <!-- 피드백 메시지창 -->
+                    <div id="form-feedback" class="hidden mt-4 p-4 rounded-lg text-sm flex items-center space-x-2"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer class="bg-blueprint-950 border-t border-blueprint-900/80 py-8 text-center text-xs text-slate-500">
+        <div class="max-w-7xl mx-auto px-6 space-y-2">
+            <p>© 2026 Han Kyu-Hyun. All Rights Reserved.</p>
+            <p>본 포트폴리오는 건축공학과 취업 준비를 위해 설계 역량을 실시간 데모와 함께 작성한 개인 이력 사이트입니다.</p>
+        </div>
+    </footer>
+
+    <!-- 자바스크립트 로직 (모바일 메뉴, 프로젝트 필터링, 모달 뷰어, 트러스 시뮬레이터) -->
+    <script>
+        // 1. 모바일 메뉴 토글
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // 2. 포트폴리오 프로젝트 필터 기능
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const portfolioItems = document.querySelectorAll('.portfolio-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // 활성화 클래스 스위칭
+                filterBtns.forEach(b => {
+                    b.classList.remove('active', 'bg-blueprint-600', 'text-white');
+                    b.classList.add('bg-blueprint-900/50', 'border-blueprint-800', 'text-slate-300');
+                });
+                btn.classList.add('active', 'bg-blueprint-600', 'text-white');
+                btn.classList.remove('bg-blueprint-900/50', 'border-blueprint-800', 'text-slate-300');
+
+                const filter = btn.getAttribute('data-filter');
+
+                portfolioItems.forEach(item => {
+                    const category = item.getAttribute('data-category');
+                    if (filter === 'all' || category === filter) {
+                        item.classList.remove('hidden');
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // 3. 프로젝트 상세 모달 데이터셋 및 제어 함수
+        const projectData = {
+            proj1: {
+                category: "구조해석 및 보강 설계",
+                title: "지진 하중을 고려한 초고층 오피스 빌딩 구조 안전성 해석",
+                details: `
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 bg-blueprint-900/30 p-4 rounded-xl border border-blueprint-800 text-xs">
+                            <div><span class="text-slate-400 block">수행 기간</span><strong class="text-slate-200">2025.09 - 2025.12</strong></div>
+                            <div><span class="text-slate-400 block">사용 프로그램</span><strong class="text-slate-200">MIDAS Gen, AutoCAD</strong></div>
+                            <div><span class="text-slate-400 block">주요 역할</span><strong class="text-slate-200">하중 산정 및 단면 구조 검토</strong></div>
+                            <div><span class="text-slate-400 block">담당 학점</span><strong class="text-slate-200">A+ 학점 취득</strong></div>
+                        </div>
+                        <div class="space-y-2">
+                            <h4 class="text-base font-bold text-white"><i class="fa-solid fa-bullseye mr-2 text-blueprint-500"></i>프로젝트 요약</h4>
+                            <p class="text-sm text-slate-300 leading-relaxed">
+                                기후 변동으로 인한 강풍하중 및 최근 위협받는 지진하중(KDS 41 건축구조기준 적용) 조건하에, 서울시에 위치하는 가상의 25층 철근콘크리트 전단벽식 오피스 건물의 3D 모델링 해석을 수행했습니다.
+                            </p>
+                        </div>
+                        <div class="space-y-2">
+                            <h4 class="text-base font-bold text-white"><i class="fa-solid fa-list-check mr-2 text-blueprint-500"></i>세부 수행 사항</h4>
+                            <ul class="text-xs text-slate-300 list-disc pl-5 space-y-1.5 leading-relaxed">
+                                <li><strong>고정하중(D) 및 적재하중(L) 분석</strong>: 용도별 면적에 따른 수동 산출 계산서 도출 및 MIDAS Gen 자동 하중 변환 정밀성 검토.</li>
+                                <li><strong>횡력 지지 프레임 설계</strong>: 전단벽 최적 위치 선정을 통해 변위 발생률을 기존안 대비 15% 억제하는 레이아웃 수정 및 가새 시스템 설계.</li>
+                                <li><strong>기둥-보 모멘트 접합부 정밀 분석</strong>: 구조 부재 응력 집중 완화를 위해 보의 응력 분포가 원활히 전달될 수 있도록 접합 단면 강도를 상향하는 단면 조정을 결정함.</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            },
+            proj2: {
+                category: "BIM 모델링 / 자동화",
+                title: "스마트 BIM 기반 친환경 오피스 타워 건축 모델링 및 에너지 분석",
+                details: `
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 bg-blueprint-900/30 p-4 rounded-xl border border-blueprint-800 text-xs">
+                            <div><span class="text-slate-400 block">수행 기간</span><strong class="text-slate-200">2025.03 - 2025.06</strong></div>
+                            <div><span class="text-slate-400 block">사용 프로그램</span><strong class="text-slate-200">Revit, Dynamo, Insight 360</strong></div>
+                            <div><span class="text-slate-400 block">주요 역할</span><strong class="text-slate-200">구조 BIM 모델링 및 패널 파라메트릭 제어</strong></div>
+                            <div><span class="text-slate-400 block">협업 인원</span><strong class="text-slate-200">3인 공동 학기 설계</strong></div>
+                        </div>
+                        <div class="space-y-2">
+                            <h4 class="text-base font-bold text-white"><i class="fa-solid fa-bullseye mr-2 text-blueprint-500"></i>프로젝트 요약</h4>
+                            <p class="text-sm text-slate-300 leading-relaxed">
+                                친환경 지속가능한 빌딩 설계를 가상 시공해보는 프로젝트입니다. Revit을 활용해 구조 부재 및 에너지 부하를 최소화할 파사드 루버를 모델링했습니다.
+                            </p>
+                        </div>
+                        <div class="space-y-2">
+                            <h4 class="text-base font-bold text-white"><i class="fa-solid fa-list-check mr-2 text-blueprint-500"></i>세부 수행 사항</h4>
+                            <ul class="text-xs text-slate-300 list-disc pl-5 space-y-1.5 leading-relaxed">
+                                <li><strong>구조-건축 간섭 검토(Clash Detection)</strong>: 덕트 부와 보, 기둥 간 간섭을 Revit 내 자동 분석을 통해 발견하고 실무 수준의 슬리브 보강 보정을 20군데 이상 수행.</li>
+                                <li><strong>다이나모(Dynamo)를 통한 자동화 설계</strong>: 태양의 실시간 입사 각도에 대응하는 외부 루버의 기울기 각도를 알고리즘 형태로 구축하여 일조 분석 데이터 연계.</li>
+                                <li><strong>물량 자동 견적(QTO)</strong>: 수동 산식 대비 철근 및 콘크리트 수량 산출 오차율을 1.5% 이내로 보정하여 견적의 정확도 대폭 개선.</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            },
+            proj3: {
+                category: "시공 관리 및 공정 분석",
+                title: "모듈러 공법을 적용한 청년주택 신축공사 가설 및 공정계획 수립",
+                details: `
+                    <div class="space-y-4">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 bg-blueprint-900/30 p-4 rounded-xl border border-blueprint-800 text-xs">
+                            <div><span class="text-slate-400 block">수행 기간</span><strong class="text-slate-200">2025.10 - 2025.11</strong></div>
+                            <div><span class="text-slate-400 block">사용 프로그램</span><strong class="text-slate-200">MS Project, CAD, Excel</strong></div>
+                            <div><span class="text-slate-400 block">주요 역할</span><strong class="text-slate-200">공정표 작성 및 최적화 분석</strong></div>
+                            <div><span class="text-slate-400 block">학술제 결과</span><strong class="text-slate-200">종합 장려상 수상</strong></div>
+                        </div>
+                        <div class="space-y-2">
+                            <h4 class="text-base font-bold text-white"><i class="fa-solid fa-bullseye mr-2 text-blueprint-500"></i>프로젝트 요약</h4>
+                            <p class="text-sm text-slate-300 leading-relaxed">
+                                도심 내 협소 공간에 공장식 유닛 제작 주택을 빠르게 시공하는 모듈러 공법을 가정하고, 현장 크레인의 회전 반경과 양중 가능 한계를 수학적으로 연산하여 스마트 공정 모델링을 진행했습니다.
+                            </p>
+                        </div>
+                        <div class="space-y-2">
+                            <h4 class="text-base font-bold text-white"><i class="fa-solid fa-list-check mr-2 text-blueprint-500"></i>세부 수행 사항</h4>
+                            <ul class="text-xs text-slate-300 list-disc pl-5 space-y-1.5 leading-relaxed">
+                                <li><strong>CPM 가트차트 공정표 작성</strong>: MS Project를 기반으로 주공정선(Critical Path)을 완벽히 도출해내어 유닛 제작과 동시 지상 기초 가설 진행의 연계를 매끄럽게 정리.</li>
+                                <li><strong>가설 크레인 평면 양중 동선 설계</strong>: 부지 내 간섭 요인을 피한 하적장 배치를 AutoCAD 평면에 실증 설계하여 일일 양중 가능 모듈 수를 최대로 도출함.</li>
+                                <li><strong>안전 위험성평가(JSA) 시나리오 작성</strong>: 양중 시 강풍 위험 가스켓 안전 제어 수칙 및 접합부 체결 안전성을 확인하는 3단계 안전 시방 설계.</li>
+                            </ul>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        const modal = document.getElementById('project-modal');
+        const modalCategory = document.getElementById('modal-category');
+        const modalBodyContent = document.getElementById('modal-body-content');
+
+        window.openModal = function(projId) {
+            const data = projectData[projId];
+            if (data) {
+                modalCategory.textContent = data.category;
+                modalBodyContent.innerHTML = `
+                    <div class="space-y-2">
+                        <h3 class="text-2xl font-bold text-white leading-snug">${data.title}</h3>
+                        <div class="w-20 h-0.5 bg-blueprint-600 rounded"></div>
+                    </div>
+                    <div>${data.details}</div>
+                `;
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // 뒷배경 스크롤 방지
+            }
+        }
+
+        window.closeModal = function() {
+            modal.classList.add('hidden');
+            document.body.style.overflow = ''; // 스크롤 복구
+        }
+
+        // 4. 동적 이메일 전송 데모 양식 제어
+        const contactForm = document.getElementById('contact-form');
+        const formFeedback = document.getElementById('form-feedback');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // 전송 처리 시각 피드백 연출
+            formFeedback.classList.remove('hidden', 'bg-red-900/40', 'border-red-700', 'text-red-300', 'bg-emerald-900/40', 'border-emerald-700', 'text-emerald-300');
+            formFeedback.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i><span>메시지 전송 중입니다...</span>`;
+            formFeedback.classList.add('bg-blueprint-900/40', 'border', 'border-blueprint-700', 'text-slate-300');
+
+            setTimeout(() => {
+                formFeedback.classList.remove('bg-blueprint-900/40', 'border-blueprint-700', 'text-slate-300');
+                formFeedback.classList.add('bg-emerald-900/40', 'border', 'border-emerald-700', 'text-emerald-300');
+                formFeedback.innerHTML = `<i class="fa-solid fa-circle-check"></i><span>메시지가 성공적으로 전달되었습니다! 기재해주신 메일 주소로 조속히 답변드리겠습니다.</span>`;
+                contactForm.reset();
+            }, 1200);
+        });
+
+
+        // 5. 트러스 교량 실시간 2D 구조해석 시뮬레이터 (Canvas 기하 코딩)
+        const canvas = document.getElementById('trussCanvas');
+        const ctx = canvas.getContext('2d');
+        const forceSlider = document.getElementById('force-slider');
+        const forceVal = document.getElementById('force-val');
+        const trussTypeSelect = document.getElementById('truss-type');
+        const nodeInfoEl = document.getElementById('node-info');
+        const resetBtn = document.getElementById('reset-sim-btn');
+
+        // 노드(Joint) 및 구조 부재(Member) 데이터 정의
+        let nodes = [];
+        let members = [];
+        let selectedNodeIndex = 4; // 기본 선택 노드
+
+        // 화면 크기 조정에 대응하는 캔버스 크기 제어
+        function resizeCanvas() {
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            initTrussData();
+        }
+
+        // 트러스 기본 정밀 좌표 배치 데이터 초기화
+        function initTrussData() {
+            const w = canvas.width;
+            const h = canvas.height;
+            const type = trussTypeSelect.value;
+            
+            nodes = [];
+            members = [];
+            
+            const startX = w * 0.12;
+            const endX = w * 0.88;
+            const spanX = (endX - startX) / 4;
+            const centerY = h * 0.65;
+            const trussHeight = h * 0.35;
+
+            if (type === 'pratt') {
+                // Pratt Truss Nodes 배치
+                // 하단 5개 노드
+                for (let i = 0; i < 5; i++) {
+                    nodes.push({ id: i, x: startX + spanX * i, y: centerY, isSupport: (i === 0 || i === 4) });
+                }
+                // 상단 3개 노드
+                for (let i = 0; i < 3; i++) {
+                    nodes.push({ id: 5 + i, x: startX + spanX * (i + 1), y: centerY - trussHeight, isSupport: false });
+                }
+
+                // 부재 연결 정보 정의 (하단부, 상단부, 사재, 수직재)
+                const connections = [
+                    [0, 1], [1, 2], [2, 3], [3, 4], // 하현 부재
+                    [5, 6], [6, 7], // 상현 부재
+                    [0, 5], [1, 5], [1, 6], [2, 6], [3, 6], [3, 7], [4, 7], // 사재 및 수직 부재 연결
+                    [2, 5], [2, 7] // 추가 수직 보조 부재
+                ];
+                connections.forEach(([n1, n2]) => {
+                    members.push({ from: n1, to: n2, force: 0 });
+                });
+            } else {
+                // Warren Truss
+                // 하단 5개 노드
+                for (let i = 0; i < 5; i++) {
+                    nodes.push({ id: i, x: startX + spanX * i, y: centerY, isSupport: (i === 0 || i === 4) });
+                }
+                // 상단 4개 노드 (지그재그 어긋나게)
+                for (let i = 0; i < 4; i++) {
+                    nodes.push({ id: 5 + i, x: startX + spanX * i + (spanX / 2), y: centerY - trussHeight, isSupport: false });
+                }
+
+                const connections = [
+                    [0, 1], [1, 2], [2, 3], [3, 4], // 하현
+                    [5, 6], [6, 7], [7, 8], // 상현
+                    [0, 5], [5, 1], [1, 6], [6, 2], [2, 7], [7, 3], [3, 8], [8, 4] // 지그재그 사재
+                ];
+                connections.forEach(([n1, n2]) => {
+                    members.push({ from: n1, to: n2, force: 0 });
+                });
+            }
+            calculateMemberForces();
+        }
+
+        // 하중 지점 클릭 및 제어
+        canvas.addEventListener('mousedown', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const clickY = e.clientY - rect.top;
+
+            // 캔버스 좌표계 스케일 보정
+            const x = (clickX / rect.width) * canvas.width;
+            const y = (clickY / rect.height) * canvas.height;
+
+            // 가장 가까운 노드 색인 도출
+            let minDist = 30; // 탐지 반경 30px
+            let targetIdx = -1;
+
+            nodes.forEach((node, idx) => {
+                // 지점을 선택하는 게 아니므로 서포트는 클릭 제외하거나 하중 적용 가능하도록 설정
+                const dist = Math.hypot(node.x - x, node.y - y);
+                if (dist < minDist) {
+                    minDist = dist;
+                    targetIdx = idx;
+                }
+            });
+
+            if (targetIdx !== -1) {
+                selectedNodeIndex = targetIdx;
+                nodeInfoEl.textContent = `선택된 노드: Node ${selectedNodeIndex + 1}`;
+                calculateMemberForces();
+            }
+        });
+
+        // 압축/인장 힘 간이 연산 로직 (공학적인 사실감을 위해 간이 분배 법칙 적용)
+        function calculateMemberForces() {
+            const F = parseFloat(forceSlider.value);
+            const numNodes = nodes.length;
+            
+            // 단순 구조 모사: 하중이 가해지는 노드와 지점 간 거리에 기초하여 힘의 방향 및 세기 분배
+            members.forEach((member) => {
+                const nodeFrom = nodes[member.from];
+                const nodeTo = nodes[member.to];
+
+                // 부재 기하 기울기
+                const dx = nodeTo.x - nodeFrom.x;
+                const dy = nodeTo.y - nodeFrom.y;
+                const dist = Math.hypot(dx, dy);
+                const isVertical = Math.abs(dx) < 5;
+                const isHorizontal = Math.abs(dy) < 5;
+
+                // 타겟 노드가 적용을 가하는 형태 모사
+                let influence = 0;
+                
+                // 선택된 하중 노드에 인접할수록 모션 확대
+                const distToLoadFrom = Math.hypot(nodeFrom.x - nodes[selectedNodeIndex].x, nodeFrom.y - nodes[selectedNodeIndex].y);
+                const distToLoadTo = Math.hypot(nodeTo.x - nodes[selectedNodeIndex].x, nodeTo.y - nodes[selectedNodeIndex].y);
+                const avgDistToLoad = (distToLoadFrom + distToLoadTo) / 2;
+
+                if (isHorizontal) {
+                    // 상현재는 대개 압축(적색), 하현재는 인장(청색)
+                    const isTopChord = nodeFrom.y < canvas.height * 0.5;
+                    if (isTopChord) {
+                        member.force = -F * 1.1 * (1.1 - (avgDistToLoad / canvas.width)); // 압축
+                    } else {
+                        member.force = F * 0.95 * (1.1 - (avgDistToLoad / canvas.width)); // 인장
+                    }
+                } else if (isVertical) {
+                    // 수직재는 기하학적 응집에 따라 교차
+                    member.force = -F * 0.5; // 가압 압축
+                } else {
+                    // 사재(Diagonal member)는 위치에 따라 전단력을 감당 (왼쪽 절반은 인장/우현은 압축 혹은 그 반대 교차)
+                    const isLeftHalf = ((nodeFrom.x + nodeTo.x) / 2) < nodes[selectedNodeIndex].x;
+                    const slope = dy / dx;
+                    if (isLeftHalf) {
+                        member.force = F * 0.7 * (slope > 0 ? 1 : -1);
+                    } else {
+                        member.force = F * 0.7 * (slope > 0 ? -1 : 1);
+                    }
+                }
+            });
+            drawTruss();
+        }
+
+        // 트러스 시각적 렌더링
+        function drawTruss() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // 캔버스 배경 그리드 효과
+            ctx.strokeStyle = '#1e293b';
+            ctx.lineWidth = 1;
+            const gridGap = 20;
+            for(let x = 0; x < canvas.width; x += gridGap) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+                ctx.stroke();
+            }
+            for(let y = 0; y < canvas.height; y += gridGap) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvas.width, y);
+                ctx.stroke();
+            }
+
+            // 1. 부재(Members) 드로잉
+            members.forEach((member) => {
+                const nodeFrom = nodes[member.from];
+                const nodeTo = nodes[member.to];
+                
+                ctx.beginPath();
+                ctx.moveTo(nodeFrom.x, nodeFrom.y);
+                ctx.lineTo(nodeTo.x, nodeTo.y);
+                
+                // 압축/인장력 색상 매핑
+                const force = member.force;
+                if (force < 0) {
+                    // 압축 (적색)
+                    const intensity = Math.min(255, Math.floor(Math.abs(force) / 300 * 200) + 55);
+                    ctx.strokeStyle = `rgba(${intensity}, 68, 68, 0.95)`;
+                    ctx.lineWidth = Math.min(8, 2.5 + Math.abs(force) / 60);
+                } else {
+                    // 인장 (청색)
+                    const intensity = Math.min(255, Math.floor(force / 300 * 200) + 55);
+                    ctx.strokeStyle = `rgba(59, 130, ${intensity}, 0.95)`;
+                    ctx.lineWidth = Math.min(8, 2.5 + force / 60);
+                }
+                ctx.stroke();
+
+                // 부재 중앙에 힘의 값 텍스트 정보 오버레이 (마우스를 올렸을 때 보거나 항시 작게 노출)
+                const midX = (nodeFrom.x + nodeTo.x) / 2;
+                const midY = (nodeFrom.y + nodeTo.y) / 2;
+                ctx.fillStyle = '#94a3b8';
+                ctx.font = '8px monospace';
+                ctx.textAlign = 'center';
+                ctx.fillText(`${Math.round(Math.abs(force))}kN`, midX, midY - 4);
+            });
+
+            // 2. 하단 서포트 및 화살표 드로잉
+            nodes.forEach((node, idx) => {
+                if (node.isSupport) {
+                    // 지점 조건 기호 그리기 (삼각형 힌지)
+                    ctx.fillStyle = '#64748b';
+                    ctx.beginPath();
+                    ctx.moveTo(node.x, node.y);
+                    ctx.lineTo(node.x - 12, node.y + 12);
+                    ctx.lineTo(node.x + 12, node.y + 12);
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.strokeStyle = '#475569';
+                    ctx.stroke();
+                }
+
+                // 일반 조인트 그리기 (원형 노드)
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, idx === selectedNodeIndex ? 7 : 5, 0, Math.PI * 2);
+                if (idx === selectedNodeIndex) {
+                    ctx.fillStyle = '#f59e0b'; // 하중 작용 핵심 노드 노란색 표시
+                } else {
+                    ctx.fillStyle = '#e2e8f0';
+                }
+                ctx.fill();
+                ctx.strokeStyle = '#1e293b';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+            });
+
+            // 3. 작용 중인 하중 벡터 화살표 드로잉
+            const targetNode = nodes[selectedNodeIndex];
+            const F = parseFloat(forceSlider.value);
+            const arrowLen = Math.min(80, 25 + F / 5);
+
+            ctx.beginPath();
+            ctx.strokeStyle = '#f59e0b';
+            ctx.lineWidth = 3.5;
+            // 화살표 선형 몸체
+            ctx.moveTo(targetNode.x, targetNode.y - arrowLen);
+            ctx.lineTo(targetNode.x, targetNode.y - 7);
+            ctx.stroke();
+
+            // 화살표 머리(촉)
+            ctx.fillStyle = '#f59e0b';
+            ctx.beginPath();
+            ctx.moveTo(targetNode.x, targetNode.y - 7);
+            ctx.lineTo(targetNode.x - 6, targetNode.y - 17);
+            ctx.lineTo(targetNode.x + 6, targetNode.y - 17);
+            ctx.closePath();
+            ctx.fill();
+
+            // 하중 크기 기입
+            ctx.fillStyle = '#f59e0b';
+            ctx.font = 'bold 11px monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText(`${F} kN`, targetNode.x, targetNode.y - arrowLen - 6);
+        }
+
+        // 입력 조작 이벤트 연결
+        forceSlider.addEventListener('input', () => {
+            forceVal.textContent = `${forceSlider.value} kN`;
+            calculateMemberForces();
+        });
+
+        trussTypeSelect.addEventListener('change', () => {
+            initTrussData();
+        });
+
+        resetBtn.addEventListener('click', () => {
+            forceSlider.value = 120;
+            forceVal.textContent = '120 kN';
+            selectedNodeIndex = 4;
+            nodeInfoEl.textContent = '선택된 노드: Node 5';
+            calculateMemberForces();
+        });
+
+        // 초기 구동 활성화
+        window.onload = function() {
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+        }
+    </script>
+</body>
+</html>
